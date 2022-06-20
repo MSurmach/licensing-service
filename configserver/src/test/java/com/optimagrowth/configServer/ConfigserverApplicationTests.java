@@ -1,10 +1,10 @@
-package com.optimagrowth.license;
+package com.optimagrowth.configServer;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
-class LicensingServiceApplicationTests {
+class ConfigserverApplicationTests {
 
     @Test
     void contextLoads() {

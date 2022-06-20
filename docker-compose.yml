@@ -1,5 +1,6 @@
 version: '3.7'
 services:
+
   licensingService:
     image: license:0.0.1
     ports:
@@ -7,9 +8,21 @@ services:
     environment:
       - 'SPRING_PROFILES_ACTIVE=dev'
     networks:
-      backend:
-        aliases:
-          - 'licenseservice'
+      - backend
+    depends_on:
+      - postgresDB
+
+  postgresDB:
+    image: postgres:14.3-alpine
+    container_name: db
+    expose:
+      - 5432
+    environment:
+      - POSTGRES_USER=m.surmach
+      - POSTGRES_PASSWORD=1111
+      - POSTGRES_DB=demo
+    networks:
+      - backend
 networks:
   backend:
     driver: bridge
