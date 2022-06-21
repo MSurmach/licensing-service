@@ -2,15 +2,25 @@ version: '3.7'
 services:
 
   licensingService:
+    container_name: licensing-service
     image: license:0.0.1
     ports:
       - '8080:8080'
     environment:
-      - 'SPRING_PROFILES_ACTIVE=dev'
+      SPRING_PROFILES_ACTIVE: "dev"
+      SPRING_CLOUD_CONFIG_URL: http://configServer:8071
     networks:
       - backend
     depends_on:
-      - postgresDB
+      - configServer
+
+  configServer:
+    container_name: config-server
+    image: config-server:0.0.1
+    ports:
+      - '8071:8071'
+    networks:
+      - backend
 
   postgresDB:
     image: postgres:14.3-alpine
@@ -20,9 +30,10 @@ services:
     environment:
       - POSTGRES_USER=m.surmach
       - POSTGRES_PASSWORD=1111
-      - POSTGRES_DB=demo
+      - POSTGRES_DB="ostock_dev"
     networks:
       - backend
+
 networks:
   backend:
     driver: bridge
